@@ -61,7 +61,7 @@ function spell() {
     pointer.style.top = `${rect.top - base.top + rect.height / 2}px`;
   }
   answer.textContent = current.slice(0, index);
-  timer = setTimeout(spell, /[\p{L}\p{N}]/u.test(character) ? 200 : 80);
+  timer = setTimeout(spell, /[\p{L}\p{N}]/u.test(character) ? 100 : 40);
 }
 form.addEventListener('submit', async event => {
   event.preventDefault();

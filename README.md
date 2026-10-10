@@ -1,6 +1,6 @@
 # Bite Halloween
 
-A web Ouija board for Bite's Halloween office party. The AI character is the playful, mischievous ghost in Bite's network. Replies are short, usually 5–15 words, and appear letter by letter as the planchette moves. This is entertainment, not factual fortune-telling.
+A web Ouija board for Bite's Halloween office party. The AI character is the playful, mischievous ghost in Bite's network. Replies are short, 4–12 words, and appear letter by letter as the planchette moves. This is entertainment, not factual fortune-telling.
 
 Questions are anonymous and independent: no accounts, guest introductions, or conversation history sent to the AI. When enabled, the backend sends the question and fixed event instructions to OpenAI. The app does not log or persist questions and requests `store: false`; OpenAI's own data handling still applies. Local scripted replies are used when AI is disabled, unconfigured, rate limited, or unavailable.
 

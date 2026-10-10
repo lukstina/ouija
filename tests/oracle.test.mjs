@@ -55,7 +55,7 @@ test('unavailable provider and malformed replies return safe errors', async () =
     async () => { throw new Error('sensitive provider error'); },
     async () => providerReply(''),
     async () => providerReply('x'.repeat(161)),
-    async () => providerReply('word '.repeat(21)),
+    async () => providerReply('word '.repeat(13)),
     async () => providerReply('👻'),
     async () => Response.json({ status: 'incomplete', output: [] }),
     async () => new Response('not json'),
@@ -100,4 +100,12 @@ test('accented Latin answers are accepted and endpoint is rate limited', async (
   assert.equal(response.status, 200);
   assert.equal(config.path, '/api/oracle');
   assert.deepEqual(config.rateLimit.aggregateBy, ['ip']);
+});
+
+test('answers must contain 4–12 words', async () => {
+  for (const [words, expectedStatus] of [[3, 502], [4, 200], [12, 200], [13, 502]]) {
+    const fetchImpl = async () => providerReply(Array(words).fill('ghost').join(' '));
+    const response = await createOracle({ env, fetchImpl })(request());
+    assert.equal(response.status, expectedStatus);
+  }
 });
