@@ -16,7 +16,6 @@ const form = document.querySelector('form');
 const answer = document.querySelector('#answer');
 const announcement = document.querySelector('#announcement');
 const ask = document.querySelector('#ask');
-const skip = document.querySelector('#skip');
 const pointer = document.querySelector('#planchette');
 const board = document.querySelector('.board');
 let timer;
@@ -28,7 +27,6 @@ function finish() {
   answer.textContent = current;
   announcement.textContent = current;
   ask.disabled = false;
-  skip.hidden = true;
   activeLetter?.classList.remove('active');
 }
 function spell() {
@@ -55,8 +53,6 @@ form.addEventListener('submit', event => {
   answer.textContent = '';
   announcement.textContent = 'The board is spelling your answer.';
   ask.disabled = true;
-  skip.hidden = false;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) finish();
   else spell();
 });
-skip.addEventListener('click', finish);

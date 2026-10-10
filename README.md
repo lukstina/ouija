@@ -18,7 +18,7 @@ npm run build
 
 Type into the question field or use your device keyboard’s dictation. The app has no microphone access or speech-to-text integration. Device dictation may use a service chosen by the device or operating system; offline behavior depends on its settings.
 
-The answer appears below the board as the planchette moves across the letters. “Reveal answer” skips the animation. Reduced-motion preferences show the complete answer immediately, and screen readers receive a complete answer announcement.
+The answer appears below the board as the planchette moves across the letters. Reduced-motion preferences show the complete answer immediately, and screen readers receive a complete answer announcement.
 
 ## Next steps
 
@@ -35,4 +35,4 @@ This app can run as a static site on Netlify's Free plan, within the plan's usag
 
 For a one-off deployment without connecting GitHub, run `npm ci` and `npm run build`, then upload the generated `dist` folder at https://app.netlify.com/drop. Further updates require another upload.
 
-Test the deployed site by submitting a question, watching the answer spell out, and selecting **Reveal answer**. On a phone, try the keyboard's dictation button in the question field. Replies remain local demo responses.
+Test the deployed site by submitting a question, watching the answer spell out, and confirming the complete reply appears below the board. On a phone, try the keyboard's dictation button in the question field. Replies remain local demo responses.
