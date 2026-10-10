@@ -1,9 +1,9 @@
 const replies = [
-  'A new door will open. Be ready.',
-  'Trust your curiosity. Take the first step.',
-  'The answer may come when you pause.',
-  'Reach out to someone you miss.',
-  'Something small will bring you joy.',
+  'A new signal stirs. Something curious is calling.',
+  'Trust your curiosity. Even ghosts take the first step.',
+  'The spirits are roaming. Your answer may arrive after midnight.',
+  'Beware the meeting that could have been an email.',
+  'A small surprise awaits beyond the next dead zone.',
 ];
 export function getDemoReply(question) {
   const text = question.trim();

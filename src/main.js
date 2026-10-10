@@ -1,5 +1,5 @@
 import './style.css';
-import { getDemoReply } from './replies.js';
+import { getReply } from './oracle.js';
 const letters = document.querySelector('#letters');
 for (const row of ['ABCDEFGHIJKLM', 'NOPQRSTUVWXYZ', '1234567890']) {
   const line = document.createElement('div');
@@ -33,7 +33,8 @@ function spell() {
   if (index >= current.length) return finish();
   const character = current[index++];
   activeLetter?.classList.remove('active');
-  activeLetter = [...letters.querySelectorAll('span')].find(cell => cell.dataset.letter === character.toUpperCase());
+  const boardLetter = character.normalize('NFD').replace(/\p{M}/gu, '').toUpperCase();
+  activeLetter = [...letters.querySelectorAll('span')].find(cell => cell.dataset.letter === boardLetter);
   if (activeLetter) {
     activeLetter.classList.add('active');
     const rect = activeLetter.getBoundingClientRect();
@@ -42,17 +43,20 @@ function spell() {
     pointer.style.top = `${rect.top - base.top + rect.height / 2}px`;
   }
   answer.textContent = current.slice(0, index);
-  timer = setTimeout(spell, /[a-z0-9]/i.test(character) ? 420 : 180);
+  timer = setTimeout(spell, /[\p{L}\p{N}]/u.test(character) ? 420 : 180);
 }
-form.addEventListener('submit', event => {
+form.addEventListener('submit', async event => {
   event.preventDefault();
   const question = document.querySelector('#question');
   if (!question.value.trim() || ask.disabled) return;
-  current = getDemoReply(question.value);
-  index = 0;
-  answer.textContent = '';
-  announcement.textContent = 'The board is spelling your answer.';
   ask.disabled = true;
+  ask.textContent = 'Listening…';
+  answer.textContent = '';
+  announcement.textContent = 'The oracle is listening.';
+  current = await getReply(question.value.trim());
+  ask.textContent = 'Ask the board';
+  index = 0;
+  announcement.textContent = 'The board is spelling your answer.';
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) finish();
   else spell();
 });
