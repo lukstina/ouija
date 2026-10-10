@@ -23,3 +23,16 @@ The answer appears below the board as the planchette moves across the letters. â
 ## Next steps
 
 Choose an answer provider and add a backend endpoint before using any private API key. Keep keys out of browser code and Git. Consider configurable spelling speed, sound that users can turn on, and conversation history with an explicit clear action.
+
+## Deploy to Netlify
+
+This app can run as a static site on Netlify's Free plan, within the plan's usage limits. No API keys, database, or paid services are needed for the current demo.
+
+1. Sign in at https://app.netlify.com/ and choose **Add new project** â†’ **Import an existing project** (the wording may vary).
+2. Connect GitHub and select `lukstina/ouija`. Grant Netlify access to this repository if prompted.
+3. Select the `main` branch. Leave the base directory empty. The committed `netlify.toml` sets the build command to `npm run build`, the publish directory to `dist`, and Node.js to version 24.
+4. Deploy. Netlify supplies an HTTPS site address and automatically redeploys when changes are pushed to `main`.
+
+For a one-off deployment without connecting GitHub, run `npm ci` and `npm run build`, then upload the generated `dist` folder at https://app.netlify.com/drop. Further updates require another upload.
+
+Test the deployed site by submitting a question, watching the answer spell out, and selecting **Reveal answer**. On a phone, try the keyboard's dictation button in the question field. Replies remain local demo responses.
