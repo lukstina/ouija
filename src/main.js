@@ -18,6 +18,12 @@ const announcement = document.querySelector('#announcement');
 const ask = document.querySelector('#ask');
 const pointer = document.querySelector('#planchette');
 const board = document.querySelector('.board');
+const question = document.querySelector('#question');
+const answerPanel = document.querySelector('.answer-panel');
+const another = document.querySelector('#another');
+const history = document.querySelector('#history');
+const historyList = document.querySelector('#history-list');
+let currentQuestion = '';
 let timer;
 let current = '';
 let index = 0;
@@ -28,6 +34,18 @@ function finish() {
   announcement.textContent = current;
   ask.disabled = false;
   activeLetter?.classList.remove('active');
+  const entry = document.createElement('li');
+  const asked = document.createElement('p');
+  asked.className = 'history-question';
+  asked.textContent = currentQuestion;
+  const replied = document.createElement('p');
+  replied.className = 'history-answer';
+  replied.textContent = current;
+  entry.append(asked, replied);
+  historyList.prepend(entry);
+  history.hidden = false;
+  another.hidden = false;
+  another.focus({ preventScroll: true });
 }
 function spell() {
   if (index >= current.length) return finish();
@@ -47,16 +65,38 @@ function spell() {
 }
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  const question = document.querySelector('#question');
   if (!question.value.trim() || ask.disabled) return;
+  currentQuestion = question.value.trim();
   ask.disabled = true;
-  ask.textContent = 'Listening…';
-  answer.textContent = '';
+  form.hidden = true;
+  board.hidden = false;
+  answerPanel.hidden = false;
+  another.hidden = true;
+  pointer.style.removeProperty('left');
+  pointer.style.removeProperty('top');
+  answer.textContent = 'Listening…';
   announcement.textContent = 'The oracle is listening.';
-  current = await getReply(question.value.trim());
-  ask.textContent = 'Ask the board';
+  current = await getReply(currentQuestion);
+  answer.textContent = '';
   index = 0;
   announcement.textContent = 'The board is spelling your answer.';
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) finish();
   else spell();
+});
+
+another.addEventListener('click', () => {
+  board.hidden = true;
+  answerPanel.hidden = true;
+  another.hidden = true;
+  form.hidden = false;
+  question.value = '';
+  question.focus();
+});
+
+document.querySelector('#clear-history').addEventListener('click', () => {
+  historyList.replaceChildren();
+  history.hidden = true;
+  if (!form.hidden) question.focus();
+  else if (!another.hidden) another.focus();
+  announcement.textContent = 'History cleared.';
 });

@@ -2,7 +2,7 @@
 
 A web Ouija board for Bite's Halloween office party. The AI character is the playful, mischievous ghost in Bite's network. Replies are short, usually 5–15 words, and appear letter by letter as the planchette moves. This is entertainment, not factual fortune-telling.
 
-Questions are anonymous and independent: no accounts, guest introductions, or conversation history. When enabled, the backend sends the question and fixed event instructions to OpenAI. The app does not log or persist questions and requests `store: false`; OpenAI's own data handling still applies. Local scripted replies are used when AI is disabled, unconfigured, rate limited, or unavailable.
+Questions are anonymous and independent: no accounts, guest introductions, or conversation history sent to the AI. When enabled, the backend sends the question and fixed event instructions to OpenAI. The app does not log or persist questions and requests `store: false`; OpenAI's own data handling still applies. Local scripted replies are used when AI is disabled, unconfigured, rate limited, or unavailable.
 
 ## Development
 
@@ -22,7 +22,7 @@ npm run build
 
 Type into the question field or use your device keyboard’s dictation. The app has no microphone access or speech-to-text integration. Device dictation may use a service chosen by the device or operating system; offline behavior depends on its settings.
 
-The answer appears below the board as the planchette moves across the letters. Reduced-motion preferences show the complete answer immediately, and screen readers receive a complete answer announcement.
+The question form shows first, with the board hidden. Submitting hides the form and shows the board; the answer appears below it as the planchette moves across the letters. After spelling finishes, **Ask another question** returns to the form. Completed questions and answers appear in newest-first history for the current page session. **Clear history** removes the entries; reloading also clears them. History stays in page memory and is never sent to the AI. Reduced-motion preferences show the complete answer immediately, and screen readers receive a complete answer announcement.
 
 ## Oracle configuration
 
