@@ -1,0 +1,27 @@
+{
+  "name": "ouija",
+  "version": "1.0.0",
+  "description": "A web Ouija board with letter-by-letter answers.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukstina/ouija.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/lukstina/ouija/issues"
+  },
+  "homepage": "https://github.com/lukstina/ouija#readme",
+  "devDependencies": {
+    "vite": "^8.3.4"
+  },
+  "private": true
+}
