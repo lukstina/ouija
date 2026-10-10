@@ -15,6 +15,8 @@ npm run dev
 
 For live AI locally, copy `.env.example` to `.env` and set `BITE_OPENAI_API_KEY` there. The file is ignored by Git. Restart the development server after changing it. Without a key, the full interface works with scripted fallbacks. Vite's local middleware runs the same function handler as Netlify; production rate limiting is enforced by Netlify and is not simulated locally.
 
+For a local 502 error, inspect the response body for `/api/oracle` in browser developer tools. It contains a safe `code`, without the key or raw provider message. `api_key_rejected` means authentication failed; `api_billing_required` means the API quota or billing needs attention; `api_access_denied` or `api_model_unavailable` means provider/model access is unavailable; `api_rate_limited` means wait before retrying; `api_timeout` or `api_connection_failed` means the request timed out or connectivity failed. `reply_incomplete` or `reply_invalid` means the model's reply failed our board format checks. A 503 means AI is disabled or the server cannot see a key. The `.env` file must be beside `package.json`; restart Vite after edits. Local `.env` settings do not configure Netlify.
+
 ```sh
 npm test
 npm run build

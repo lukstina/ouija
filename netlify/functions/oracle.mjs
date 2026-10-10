@@ -45,9 +45,21 @@ export function createOracle({ env = process.env, fetchImpl = fetch, timeoutMs =
         }),
         signal: AbortSignal.timeout(timeoutMs),
       });
-      if (!response.ok) return json({ error: 'The signal is temporarily lost.' }, 502);
+      if (!response.ok) {
+        // Inspect only a known provider error code; never return its raw message.
+        let providerCode;
+        try { providerCode = (await response.json())?.error?.code; } catch { /* Non-JSON upstream error. */ }
+        const code = providerCode === 'insufficient_quota' ? 'api_billing_required'
+          : response.status === 401 ? 'api_key_rejected'
+          : response.status === 403 ? 'api_access_denied'
+          : response.status === 404 ? 'api_model_unavailable'
+          : response.status === 429 ? 'api_rate_limited'
+          : response.status === 400 ? 'api_request_rejected'
+          : 'api_unavailable';
+        return json({ error: 'The signal is temporarily lost.', code }, 502);
+      }
       const result = await response.json();
-      if (result.status !== 'completed') return json({ error: 'The signal was incomplete.' }, 502);
+      if (result.status !== 'completed') return json({ error: 'The signal was incomplete.', code: 'reply_incomplete' }, 502);
       const answer = (result.output || [])
         .filter(item => item.type === 'message' && item.role === 'assistant')
         .flatMap(item => item.content || [])
@@ -55,12 +67,13 @@ export function createOracle({ env = process.env, fetchImpl = fetch, timeoutMs =
         .map(item => item.text).join(' ').replace(/\s+/g, ' ').trim();
       if (!answer || answer.length > 160 || answer.split(' ').length > 20 ||
           !/^[\p{Script=Latin}\p{M}\p{N}\s.,!?;:'"“”‘’()—–-]+$/u.test(answer)) {
-        return json({ error: 'The signal could not be read.' }, 502);
+        return json({ error: 'The signal could not be read.', code: 'reply_invalid' }, 502);
       }
       return json({ answer });
-    } catch {
+    } catch (error) {
       // Never log question bodies, provider responses, or credentials.
-      return json({ error: 'The signal is temporarily lost.' }, 502);
+      const code = ['TimeoutError', 'AbortError'].includes(error?.name) ? 'api_timeout' : 'api_connection_failed';
+      return json({ error: 'The signal is temporarily lost.', code }, 502);
     }
   };
 }

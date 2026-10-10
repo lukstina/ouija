@@ -72,7 +72,27 @@ test('a stalled provider is aborted', async () => {
     const keepAlive = setTimeout(() => reject(new Error('No abort received')), 1000);
     signal.addEventListener('abort', () => { clearTimeout(keepAlive); reject(signal.reason); }, { once: true });
   });
-  assert.equal((await createOracle({ env, fetchImpl, timeoutMs: 10 })(request())).status, 502);
+  const response = await createOracle({ env, fetchImpl, timeoutMs: 10 })(request());
+  assert.equal(response.status, 502);
+  assert.equal((await response.json()).code, 'api_timeout');
+});
+
+test('provider failures expose actionable codes without leaking provider messages', async () => {
+  for (const [status, providerCode, expected] of [
+    [401, 'invalid_api_key', 'api_key_rejected'],
+    [403, null, 'api_access_denied'],
+    [404, null, 'api_model_unavailable'],
+    [429, 'insufficient_quota', 'api_billing_required'],
+    [429, 'rate_limit_exceeded', 'api_rate_limited'],
+    [400, null, 'api_request_rejected'],
+    [500, null, 'api_unavailable'],
+  ]) {
+    const fetchImpl = async () => Response.json({ error: { code: providerCode, message: 'sensitive provider message' } }, { status });
+    const response = await createOracle({ env, fetchImpl })(request());
+    const body = await response.json();
+    assert.equal(body.code, expected);
+    assert.doesNotMatch(JSON.stringify(body), /sensitive|test-key/);
+  }
 });
 
 test('accented Latin answers are accepted and endpoint is rate limited', async () => {
