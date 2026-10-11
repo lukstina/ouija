@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#16131d">
-  <title>Bite Halloween</title>
+  <meta name="theme-color" content="#151411">
+  <title>Talk to the Other side</title>
 </head>
 <body>
+  <div class="cobweb cobweb-left" aria-hidden="true"></div>
+  <div class="cobweb cobweb-right" aria-hidden="true"></div>
   <main id="app">
-    <header><h1>Bite Halloween</h1></header>
+    <header><h1>Talk to the <span>Other side</span></h1></header>
     <section class="board" aria-label="Ouija board" hidden>
       <div class="ends"><span>YES</span><span>☾</span><span>NO</span></div>
       <div id="letters" aria-hidden="true"></div>
@@ -17,7 +19,7 @@
     </section>
     <form id="question-form">
       <div class="input-row">
-        <input id="question" aria-label="Your question" name="question" maxlength="300" placeholder="What does tomorrow hold?" autocomplete="off" required>
+        <input id="question" aria-label="Your question" name="question" maxlength="300" placeholder="Who is calling from beyond?" autocomplete="off" required>
         <button id="ask" type="submit">Ask the board</button>
       </div>
     </form>

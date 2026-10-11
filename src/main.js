@@ -23,6 +23,20 @@ const answerPanel = document.querySelector('.answer-panel');
 const another = document.querySelector('#another');
 const history = document.querySelector('#history');
 const historyList = document.querySelector('#history-list');
+const suggestions = [
+  'Who is calling from beyond?',
+  'Will this campaign rise again?',
+  'Is my next brief haunted?',
+  'Do ghosts get unlimited data?',
+  'Will our leads cross over?',
+  'Is Go3 haunted after midnight?',
+];
+let suggestionIndex = 0;
+setInterval(() => {
+  if (document.hidden || form.hidden || question.value) return;
+  suggestionIndex = (suggestionIndex + 1) % suggestions.length;
+  question.placeholder = suggestions[suggestionIndex];
+}, 3000);
 let currentQuestion = '';
 let timer;
 let current = '';
