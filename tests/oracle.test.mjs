@@ -17,6 +17,11 @@ test('sends anonymous event context and returns the provider answer', async () =
     assert.equal(body.input, 'Will we survive Monday?');
     assert.match(body.instructions, /Bite.*Halloween office party/);
     assert.match(body.instructions, /do not know who is asking/);
+    assert.match(body.instructions, /The Other side\. Roaming charges might apply/);
+    assert.match(body.instructions, /Bite Latvia Marketing team/);
+    assert.match(body.instructions, /Go3/);
+    assert.match(body.instructions, /ManaBite/);
+    assert.match(body.instructions, /Do not invent current product prices/);
     assert.equal(body.store, false);
     assert.equal(body.model, 'gpt-4.1-mini');
     assert.equal(body.max_output_tokens, 120);

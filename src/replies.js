@@ -1,9 +1,9 @@
 const replies = [
-  'A new signal stirs. Something curious is calling.',
-  'Trust your curiosity. Even ghosts take the first step.',
-  'The spirits are roaming. Your answer may arrive after midnight.',
-  'Beware the meeting that could have been an email.',
-  'A small surprise awaits beyond the next dead zone.',
+  'Full coverage. Eternal retargeting. Roaming charges might apply.',
+  'Even the undead clicked. Now haunt the conversion funnel.',
+  'Your next brief arrives from the Other side.',
+  'The approval chain only needs one more resurrection.',
+  'Your leads crossed over. Try retargeting the Other side.',
 ];
 export function getDemoReply(question) {
   const text = question.trim();

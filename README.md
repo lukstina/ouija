@@ -1,6 +1,6 @@
 # Bite Halloween
 
-A web Ouija board for Bite's Halloween office party. The AI character is the playful, mischievous ghost in Bite's network. Replies are short, 4–12 words, and appear letter by letter as the planchette moves. This is entertainment, not factual fortune-telling.
+A web Ouija board for the Bite Latvia Marketing Halloween party, themed **“The Other side. Roaming charges might apply”**. The AI character is the playful, mischievous ghost in Bite Latvia's network. Replies mix Halloween, the Other side, telecommunications, and corporate marketing, with a little dark humour. Replies are short, 4–12 words, and appear letter by letter as the planchette moves. This is entertainment, not factual fortune-telling.
 
 Questions are anonymous and independent: no accounts, guest introductions, or conversation history sent to the AI. When enabled, the backend sends the question and fixed event instructions to OpenAI. The app does not log or persist questions and requests `store: false`; OpenAI's own data handling still applies. Local scripted replies are used when AI is disabled, unconfigured, rate limited, or unavailable.
 
@@ -29,6 +29,8 @@ The question form shows first, with the board hidden. Submitting hides the form 
 ## Oracle configuration
 
 The browser sends only `{ "question": "..." }` to `/api/oracle`. The Netlify function uses OpenAI's Responses API with `gpt-4.1-mini` by default. Edit the personality and confirmed event context in `netlify/functions/oracle.mjs`. Add verified inside jokes there, rather than invented facts about colleagues. Accented Latin letters move the planchette to their base letter while preserving accents in the displayed answer.
+
+The host-provided brief describes the audience's shared responsibilities: rate plans, Go3, internet plans, device offers, banners and ads, Bite social media, e-commerce on Bite's website, the ManaBite page, and direct marketing ads. The oracle tailors jokes to this team context without identifying individuals. It has no live browsing and must not invent current prices, allowances, offers, internal metrics, or commercial promises. These product references come from the host; they have not been independently verified against Bite's website in this environment.
 
 Server settings:
 
