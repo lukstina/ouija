@@ -1,0 +1,21 @@
+[Unit]
+Description=Bite Other side oracle
+After=network.target
+
+[Service]
+Type=simple
+User=ouija
+Group=ouija
+WorkingDirectory=/var/www/ouija
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/ouija.env
+ExecStart=/opt/ouija-node24/bin/node /var/www/ouija/server.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

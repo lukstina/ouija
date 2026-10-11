@@ -1,0 +1,7 @@
+[Unit]
+Description=Renew Other side TLS certificate
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/ouija-acme/acme.sh --cron --home /opt/ouija-acme

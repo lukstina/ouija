@@ -65,3 +65,7 @@ To turn AI off, set `BITE_AI_ENABLED=false` and redeploy. Remove that setting or
 Uploading only `dist` with Netlify Drop runs the interface and scripted fallbacks, but does not deploy the AI function. Use a Git-connected deployment for the full oracle.
 
 Test the deployed site by submitting a question, watching the answer spell out, and confirming the complete reply appears below the board. On a phone, try the keyboard's dictation button in the question field. Tests cover the backend with a simulated provider, client fallbacks, and validation; a live model check requires your configured key.
+
+## Run on your own server
+
+See [the Debian/Nginx deployment guide](docs/self-hosting.md) for isolated Node 24 installation, systemd, server-only credentials, Nginx rate limiting, HTTPS, and certificate renewal. `npm start` runs the production app on `127.0.0.1:3001` after `npm run build`; it serves both the frontend and `/api/oracle`. It uses process environment variables, not an automatically loaded `.env` file. Netlify's function rate limiting does not apply to this standalone server; keep it behind the supplied Nginx configuration.
