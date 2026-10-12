@@ -50,7 +50,7 @@ The frontend and function can run on Netlify's Free plan within its usage limits
 
 1. Sign in at https://app.netlify.com/ and choose **Add new project** → **Import an existing project** (the wording may vary).
 2. Connect GitHub and select `lukstina/ouija`. Grant Netlify access to this repository if prompted.
-3. Select the `main` branch. Leave the base directory empty. The committed `netlify.toml` sets the build command to `npm run build`, the publish directory to `dist`, and Node.js to version 24.
+3. Select the `main` branch. Leave the base directory empty. The committed `netlify.toml` runs `npm test && npm run build`, publishes `dist`, uses Node.js 24, and bundles `netlify/functions` with esbuild. Netlify runs the oracle function; it does not need `npm start`, systemd, or Nginx.
 4. Deploy. Netlify supplies an HTTPS site address and automatically redeploys when changes are pushed to `main`.
 
 To activate AI on the deployed site:
